@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Module 04 Template</title>
+    <title>Geo409 Task C</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
@@ -50,17 +50,17 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>GEO 409</h1>
+        <h2>Task C</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
+        <p>Map authored by Paul Puckett</p>
+ /*       <p>Additional information about the data and map goes here.</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.
-        </p>
+        </p> */
     </footer>
 
     <script>
@@ -69,7 +69,7 @@
 
         var options = {
             center: [38.0489,-84.5025],
-            zoom: 13
+            zoom: 8
         }
         map = L.map(targetDiv, options);
         var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
@@ -80,9 +80,62 @@
         });
         map.addLayer(tiles);
         
-        // continue JavaScript coding here!
+        // begin writing Task C code here
         
+        var city1Name = "Lexington";
+        var city1Lat = 38.046342;
+        var city1Lon = -84.497067;
+        var city1Pop = 308428;
+        var city1Capitol = false;
         
+        var city2Name = "Frankfort";
+        var city2Lat = 38.186570;
+        var city2Lon = -84.875273;
+        var city2Pop = 25527;
+        var city2Capitol = true;
+        
+        var city3Name = "Winchester";
+        var city3Lat = 37.992761;
+        var city3Lon = -84.177313;
+        var city3Pop = 18368;
+        var city3Capitol = false;
+       
+        
+        // end writing Task C code here
+        
+        // city1 marker code
+        var city1Popup = "<b>"+city1Name+"</b><br>"
+                        +"<b>population</b>: "+city1Pop;
+        
+        if(city1Capitol == true) {
+            city1Popup += "<br>Capitol of the Commonwealth of Kentucky";   
+        }
+        
+        L.marker([city1Lat,city1Lon]).addTo(map)
+            .bindPopup(city1Popup);
+        
+
+        var city2Popup = "<b>"+city2Name+"</b><br>"
+                        +"<b>population</b>: "+city2Pop;
+        
+        if(city2Capitol == true) {
+            city2Popup += "<br>Capitol of the Commonwealth of Kentucky";   
+        }
+        
+        L.marker([city2Lat,city2Lon]).addTo(map)
+            .bindPopup(city2Popup);
+        
+
+        var city3Popup = "<b>"+city3Name+"</b><br>"
+                        +"<b>population</b>: "+city3Pop;
+        
+        if(city3Capitol == true) {
+            city3Popup += "<br>Capitol of the Commonwealth of Kentucky";   
+        }
+        
+        L.marker([city3Lat,city3Lon]).addTo(map)
+            .bindPopup(city3Popup);
+          
     </script>
     
 </body>
