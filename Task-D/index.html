@@ -94,12 +94,12 @@
         ];
         var cityPops = [308428, 25527, 18368];
         var cityCapital = [false, true, false];
-        for(/* add code here */) {
+        for(var i = 0; i < cities.length + 1; i++) {
             
-            var popup = "<b>"+/* add code here */+"</b><br>"
-                            +"<b>population</b>: "+/* add code here */;
+            var popup = "<b>"+cities[i]+"</b><br>"
+                            +"<b>population</b>: "+cityPops[i];
 
-            if(/* add code here */ == true) {
+            if(cityCapital == true) {
                
                 popup += "<br>Capitol of the Commonwealth of Kentucky"; 
                 
