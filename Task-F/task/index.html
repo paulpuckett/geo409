@@ -78,8 +78,8 @@
     <script>
 
         var map = L.map('map', {
-            center: [38.96,-85.36],
-            zoom: 8,
+            center: [39.83,-84.89],
+            zoom: 6,
         });
        
         var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
@@ -123,17 +123,24 @@
             //console.log(cities[i]);
             //console.log(cities[i].properties.population);
             
-        var props = cities[i].properties;
+            var props = cities[i].properties;
+            var popup = cities[i].name;        
             
-        var cityName = cities[i].name;
+       //     function buildPopup(name, pop, state);{
+       //         var value1 = name;
+       //         var value2 = pop;
+       //         var value3 = state;
+       //         return [value1, value2, value3];
+       //     }
             
-        //console.log(props);
-        //console.log(cityName);
+       //console.log(cityName);
             
+                             
         L.marker(props.coordinates).addTo(map)
-            .bindPopup(cityName);
-        }
+            .bindPopup(popup);
         
+        }
+        //var buildPopup
                     
         // End code for Task F
         
