@@ -124,7 +124,7 @@
             //console.log(cities[i].properties.population);
             
             var props = cities[i].properties;
-            var popup = cities[i].name;        
+            var popup = buildPopup(cities[i].name, props.population, props.state)        
             
        //     function buildPopup(name, pop, state);{
        //         var value1 = name;
@@ -139,6 +139,21 @@
             L.marker(props.coordinates).addTo(map)
             .bindPopup(popup);
         
+        }
+        
+        function buildPopup(name, pop, state) {
+            
+            if(state == "KY") {
+                var colorClass = "blue";
+            } else if (state == "IN") {
+                var colorClass = "red";
+            } else if (state == "OH") {
+                var colorClass = "purple";   
+            }
+            
+            return "<div class='"+colorClass+"'><b>"+name+"</b><br>"+
+                   "<b>Population</b>: "+pop.toLocaleString()+"<div>";
+            
         }
         //var buildPopup
                     
