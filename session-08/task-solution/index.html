@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Module 08 Practice Template</title>
+    <title>Geo409 Task G Solution</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
@@ -45,6 +45,8 @@
             color: #001323;
         }
         /* Additional style rules go here! */
+        
+
     </style>
 </head>
 
@@ -64,33 +66,37 @@
     </footer>
 
     <script>
-        var map;
-        var targetDiv = 'map';
 
-        var options = {
-            center: [38.0489,-84.5025],
-            zoom: 13,
+    var options = {
+        center: [40,-94],
+        zoom: 4,
+        minZoom: 4,
+        maxZoom: 12
+    }
+    
+    var map = L.map('map', options);
+       
+    var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
             minZoom: 4,
-            maxZoom: 18,
-            //dragging: false,
-            //zoomControl: false
-        }
-        map = L.map(targetDiv, options);
-        var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
-            //subdomains: '0123',
-            //minZoom: 2,
-            //maxZoom: 18
-        });
-        map.addLayer(tiles);
+            maxZoom: 12
+    });
         
-        // continue JavaScript coding here!
+    map.addLayer(tiles);
         
-        map.on("click", function(e) {
-            console.log(e.latlng);
-        });
+    var redIguana = L.latLng(40.7718,-111.9124);
         
-        
+    map.on('click', function(e){
+        var currentCoords =  e.latlng;
+        map.setView(currentCoords, 6);
+        var distanceFromClick = redIguana.distanceTo(currentCoords);
+        console.log("You clicked ", distanceFromClick, "meters from Red Iguana.");
+        var northBorder = map.getBounds().getSouthWest();
+        var distanceFromSW = redIguana.distanceTo(northBorder);
+        console.log("Red Iguana is ", distanceFromSW, " meters from the SouthWest corner of the current map view.");
+    });
+                  
     </script>
     
 </body>
