@@ -182,6 +182,18 @@
         };
         
 //      steps 4-6  here
+        
+        var iguanaGroup = L.layerGroup();
+        
+//        for (var i=0; i < iguanaZones.length; i++) {
+//            var iguanaLoop = iguanaZones[i];
+//        }
+        
+        var iguanaTest = L.circle([-37.854506, 144.797431], 1850);
+        
+        iguanaTest.addTo(iguanaGroup);
+        
+        iguanaGroup.addTo(map);
             
         var marker;  // keep this code
        
