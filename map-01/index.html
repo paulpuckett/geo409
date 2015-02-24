@@ -70,14 +70,14 @@
  // Step 1 and 2 here
         
         var options = {
-            center: [-37.813611,144.963056],
+            center: [-37.813611,145.20],
             zoom: 10
         }
         var map = L.map('map', options);
         var tiles = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
             //subdomains: '0123',
-            minZoom: 10,
+            minZoom: 8,
             maxZoom: 14
         });
         map.addLayer(tiles);
@@ -185,21 +185,35 @@
         
         var iguanaGroup = L.layerGroup();
         
-//        for (var i=0; i < iguanaZones.length; i++) {
-//            var iguanaLoop = iguanaZones[i];
-//        }
+        console.log(iguanaZones.length);
+        console.log(iguanaZones);
         
-        var iguanaTest = L.circle([-37.854506, 144.797431], 1850);
+        i = 0;
         
-        iguanaTest.addTo(iguanaGroup);
+        while (i < iguanaZones.length) {
+            var iguanaCampCoords = iguanaZones[i].coordinates;
+            var iguanaCampSize = iguanaZones[i].properties.size;
+            var iguanaCampMarker = L.circle(iguanaCampCoords, iguanaCampSize);
+            iguanaCampMarker.addTo(iguanaGroup);
+            i++
+        }
         
         iguanaGroup.addTo(map);
-            
+        
+        
+//        var iguanaTest = L.circle([-37.854506, 144.797431], 1850);
+//        
+//        iguanaTest.addTo(iguanaGroup);
+//        
+//        iguanaGroup.addTo(map);
+        
         var marker;  // keep this code
        
         map.on('click', function(e) {  // keep this code
 
 // uncomment this code after step seven is finished          
+            
+            
             if(map.hasLayer(marker)) {               
                 map.removeLayer(marker);
             }
@@ -214,7 +228,7 @@
             
         });  // keep this code
         
-        function testDistance() {
+        function testDistance(currentCoords) {
             
             iguanaGroup.eachLayer(function(layer) {
 //              step 9 here
