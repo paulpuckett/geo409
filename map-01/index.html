@@ -185,6 +185,8 @@
         
         var iguanaGroup = L.layerGroup();
         
+        //var iguanaCampMarker;
+        
         console.log(iguanaZones.length);
         console.log(iguanaZones);
         
@@ -200,22 +202,16 @@
         
         iguanaGroup.addTo(map);
         
-        
-//        var iguanaTest = L.circle([-37.854506, 144.797431], 1850);
-//        
-//        iguanaTest.addTo(iguanaGroup);
-//        
-//        iguanaGroup.addTo(map);
-        
         var marker;  // keep this code
-       
+        
+               
         map.on('click', function(e) {  // keep this code
 
 // uncomment this code after step seven is finished          
             
             
             if(map.hasLayer(marker)) {               
-                map.removeLayer(marker);
+                    map.removeLayer(marker);
             }
 
 //              step seven here
@@ -228,13 +224,13 @@
             
         });  // keep this code
         
-        function testDistance(currentCoords) {
+ //function testDistance(currentCoords) {
             
-            iguanaGroup.eachLayer(function(layer) {
+//            iguanaGroup.eachLayer(function(layer) {
 //              step 9 here
 //              step 10 here
-            });
-        }
+//            });
+//        }
         
 // end map1 code
         
