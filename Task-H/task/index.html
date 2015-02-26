@@ -62,31 +62,31 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>Donut Tour</h1>
+        <h2>Why would there be any other tour?</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.
+        <p>Map authored by Paul Puckett</p>
+        <p>Donuts copyright 2015 by the bakers</p>
+        <p>A quick and handy guide for a donut tour of Lexington KY featuring the fine examples produced by three local bakeries, a place to stop and enjoy the results of your tour, and a suggested route to enjoy the city and, of course, your donuts.  You're welcome.
         </p>
     </footer>
 
     <script>
 
         var map = L.map('map', {
-            center: [38.96,-85.36],
-            zoom: 8,
+            center: [38.04,-84.5025],
+            zoom: 13,
         });
        
         var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
             attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
             subdomains: '0123',
-            minZoom: 4,
-            maxZoom: 12
+            minZoom: 2,
+            maxZoom: 18
         });
         map.addLayer(tiles);
         
@@ -97,7 +97,10 @@
   "features": [
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "Spalding's Bakery",
+        "description": "Donuts and Cakes"
+      },
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -108,7 +111,9 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "North Limestone Coffee & Donuts",
+        "description": "Donuts and Coffee"},
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -119,7 +124,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "Donut Days",
+        "description": "Donuts, Cakes, and Cookies"
+      },
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -130,7 +138,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "Woodland Park",
+        "description": "A good place to enjoy your donuts"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -169,7 +180,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "Donut Route",
+        "description": "A leisurely path between donut shops and the park"
+      },
       "geometry": {
         "type": "LineString",
         "coordinates": [
@@ -310,6 +324,8 @@
     }
   ]
 };
+        
+    var placesLeaflet = L.geoJson(places).addTo(map);
         
 
           
