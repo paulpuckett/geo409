@@ -329,10 +329,31 @@
   ]
 };
         
+    var pointOptions = {
+        color: "blue"
+    }
+    var lineOptions = {
+        color: "red"
+    }
+    var polygonOptions = {
+        color: "green"
+    }
+        
     var placesLeaflet = L.geoJson(places, {
         pointToLayer : function(feature, latlng) {
             console.log(feature, latlng);
             return L.circle(latlng, feature.properties.size);
+        },
+        onEachFeature: function(feature, layer) {
+            if(feature.geometry.type == "Point") {
+                layer.setStyle(pointOptions);
+            }
+            if(feature.geometry.type == "LineString") {
+                layer.setStyle(lineOptions);
+            }
+            if(feature.geometry.type == "Polygon") {
+                layer.setStyle(polygonOptions);
+            }
         }
     }).addTo(map);
         
