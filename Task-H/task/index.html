@@ -100,7 +100,7 @@
       "properties": {
         "name": "Spalding's Bakery",
         "description": "Donuts and Cakes",
-        "size": 10
+        "size": 150
       },
       "geometry": {
         "type": "Point",
@@ -115,7 +115,7 @@
       "properties": {
         "name": "North Limestone Coffee & Donuts",
         "description": "Donuts and Coffee",
-        "size": 10
+        "size": 150
       },
       "geometry": {
         "type": "Point",
@@ -130,7 +130,7 @@
       "properties": {
         "name": "Donut Days",
         "description": "Donuts, Cakes, and Cookies",
-        "size": 10
+        "size": 150
       },
       "geometry": {
         "type": "Point",
@@ -329,7 +329,12 @@
   ]
 };
         
-    var placesLeaflet = L.geoJson(places).addTo(map);
+    var placesLeaflet = L.geoJson(places, {
+        pointToLayer : function(feature, latlng) {
+            console.log(feature, latlng);
+            return L.circle(latlng, feature.properties.size);
+        }
+    }).addTo(map);
         
 
           
