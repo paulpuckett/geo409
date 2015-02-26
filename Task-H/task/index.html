@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Geo409 Task H Starter</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        /* Additional style rules go here! */
+        
+        .blue {
+            color: #165bb6;
+        }
+        .red {
+            color: #cc0000;
+        }
+        .purple {
+            color: #b6165b; 
+        }
+        
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Map Title</h1>
+        <h2>Map Subtitle</h2>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>
+        <p>Map authored by YOUR NAME</p>
+        <p>Additional information about the data and map goes here.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.
+        </p>
+    </footer>
+
+    <script>
+
+        var map = L.map('map', {
+            center: [38.96,-85.36],
+            zoom: 8,
+        });
+       
+        var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
+            minZoom: 4,
+            maxZoom: 12
+        });
+        map.addLayer(tiles);
+        
+        // Begin writing/modifying code for Task H here
+        
+        var places = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.47758913040161,
+          38.04096830584696
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.48663353919983,
+          38.05392057015672
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.51857328414917,
+          38.012335082771926
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -84.49222326278687,
+              38.03567014414195
+            ],
+            [
+              -84.49072122573853,
+              38.03681937923376
+            ],
+            [
+              -84.48797464370728,
+              38.03445328733057
+            ],
+            [
+              -84.48984146118164,
+              38.033202607874166
+            ],
+            [
+              -84.4906997680664,
+              38.03406456492192
+            ],
+            [
+              -84.49134349822998,
+              38.03369274155713
+            ],
+            [
+              -84.49222326278687,
+              38.03567014414195
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -84.47758913040161,
+            38.04109505143235
+          ],
+          [
+            -84.47855472564697,
+            38.041120400523106
+          ],
+          [
+            -84.47983145713806,
+            38.0414245889277
+          ],
+          [
+            -84.48485255241394,
+            38.04417912639248
+          ],
+          [
+            -84.48756694793701,
+            38.04504940349737
+          ],
+          [
+            -84.49256658554077,
+            38.04952736484472
+          ],
+          [
+            -84.4842517375946,
+            38.05537364926731
+          ],
+          [
+            -84.48704123497009,
+            38.05788267725838
+          ],
+          [
+            -84.50735092163086,
+            38.04375665804892
+          ],
+          [
+            -84.50828433036804,
+            38.04314829935183
+          ],
+          [
+            -84.50911045074463,
+            38.042793421110964
+          ],
+          [
+            -84.5104193687439,
+            38.04219350398293
+          ],
+          [
+            -84.51154589653015,
+            38.04165272940189
+          ],
+          [
+            -84.51213598251343,
+            38.04130629358718
+          ],
+          [
+            -84.51320886611938,
+            38.04011487986032
+          ],
+          [
+            -84.51871275901794,
+            38.036675725833476
+          ],
+          [
+            -84.52837944030762,
+            38.030904006157265
+          ],
+          [
+            -84.53220963478088,
+            38.02384718633656
+          ],
+          [
+            -84.52876567840576,
+            38.02235122224748
+          ],
+          [
+            -84.52875494956969,
+            38.021894820343505
+          ],
+          [
+            -84.52866911888123,
+            38.021303184014876
+          ],
+          [
+            -84.52840089797974,
+            38.02050024135707
+          ],
+          [
+            -84.52800393104553,
+            38.019739550723614
+          ],
+          [
+            -84.52730655670166,
+            38.01881825927275
+          ],
+          [
+            -84.52498912811278,
+            38.01682349681326
+          ],
+          [
+            -84.52182412147522,
+            38.01420317549131
+          ],
+          [
+            -84.51989293098448,
+            38.012639390714305
+          ],
+          [
+            -84.51874494552611,
+            38.01205613271497
+          ],
+          [
+            -84.51662063598633,
+            38.01126154188584
+          ],
+          [
+            -84.5068359375,
+            38.039117795317466
+          ],
+          [
+            -84.50604200363159,
+            38.039996582404
+          ],
+          [
+            -84.50127840042114,
+            38.04344402990536
+          ],
+          [
+            -84.49216961860657,
+            38.03528987856014
+          ]
+        ]
+      }
+    }
+  ]
+};
+        
+
+          
+    </script>
+    
+</body>
+
+</html>
