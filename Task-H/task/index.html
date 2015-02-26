@@ -344,6 +344,11 @@
             console.log(feature, latlng);
             return L.circle(latlng, feature.properties.size);
         },
+        style : function(feature) {
+            return { dashArray: "10",
+                    weight: 2
+                   }
+        },
         onEachFeature: function(feature, layer) {
             if(feature.geometry.type == "Point") {
                 layer.setStyle(pointOptions);
