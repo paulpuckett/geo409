@@ -144,7 +144,7 @@
       "type": "Feature",
       "properties": {
         "name": "Woodland Park",
-        "description": "A good place to enjoy your donuts"
+        "description": "a good place to enjoy your donuts and get some exercise afterwards"
       },
       "geometry": {
         "type": "Polygon",
@@ -186,7 +186,7 @@
       "type": "Feature",
       "properties": {
         "name": "Donut Route",
-        "description": "A leisurely path between donut shops and the park"
+        "description": "a leisurely path between donut shops and the park"
       },
       "geometry": {
         "type": "LineString",
@@ -347,12 +347,16 @@
         onEachFeature: function(feature, layer) {
             if(feature.geometry.type == "Point") {
                 layer.setStyle(pointOptions);
+                layer.bindPopup("Welcome to "+feature.properties.name+ " where you can find "+feature.properties.description+ "!")
+                
             }
             if(feature.geometry.type == "LineString") {
                 layer.setStyle(lineOptions);
+                layer.bindPopup("Enjoy the "+feature.properties.name+ " ,where you can enjoy "+feature.properties.description+ "!")
             }
             if(feature.geometry.type == "Polygon") {
                 layer.setStyle(polygonOptions);
+                layer.bindPopup("Your destination, "+feature.properties.name+ ", " +feature.properties.description+ "!")
             }
         }
     }).addTo(map);
