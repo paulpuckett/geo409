@@ -88,17 +88,32 @@
         map.addLayer(tiles);
         
         //console.log(plants);
+        plants.features.sort(function(a,b) {
+			return b.properties.capacity - a.properties.capacity;
+		});
+        
         L.geoJson(plants, {
             pointToLayer: function(feature, latlng) {
                 return L.circleMarker(latlng, {
-                    color: 'orange',
+                    color: 'blue',
                     weight: 1,
-                    fillColor: 'yellow',
-                    fillOpacity: 1,
-                    radius: 2
+                    fillColor: 'white',
+                    fillOpacity: 0.8,
+                    radius: getRadius(feature.properties.capacity)
                 });
-            }
+            },
+            filter: function(feature, layer) {
+                if(feature.properties.source.Wind &&
+                  feature.properties.source.Wind < 500){
+                    return feature;   
+                }
+            },
         }).addTo(map);
+        
+        function getRadius(val) {
+            var radius = Math.sqrt(val/Math.PI);
+            return radius * .8;   
+        }       
         
     </script>
     
