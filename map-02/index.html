@@ -66,8 +66,8 @@
         <!-- add HTML here-->
         
         <p>Map authored by Paul Puckett</p>
-        <p>A map of power plants of certain types within 400km of Lexington KY</p>
-        <p>Click on each circle to learn the name, power output, source of power, and distance from Lexington KY
+        <p>A map of Coal power plants producing less than 500 MW within 400km of Lexington KY</p>
+        <p>Click on each circle to learn the name, power capacity, fuel source, and distance from Lexington KY
         </p>
     </footer>
         
@@ -83,10 +83,10 @@
             zoom: 4,
         });
        
-        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', 
+        var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', 
                                          {
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-            subdomains: 'abcd',
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
             minZoom: 0,
             maxZoom: 18
         });
@@ -106,10 +106,10 @@
         L.geoJson(plants, {
             pointToLayer: function(feature, latlng) {
                 return L.circleMarker(latlng, {
-                    color: 'blue',
+                    color: 'purple',
                     weight: 1,
                     fillColor: 'white',
-                    fillOpacity: 0.8,
+                    fillOpacity: 0.6,
                     radius: getRadius(feature.properties.capacity)
                 });
             },
@@ -128,7 +128,7 @@
                 for(var fuel in source){
                     content+="<b>"+fuel+"</b>: "+source[fuel].toLocaleString()+" MW<br>";
                 }
-                //content+="This plant is " +distanceFromLex+ " from Lexington";
+                content+="This plant is <b>DISTANCE</b> from Lexington";
                 
                 layer.bindPopup(content); 
                 
