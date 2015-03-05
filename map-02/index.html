@@ -53,8 +53,8 @@
     <header>
         <!-- add HTML here-->
         
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>GEO409</h1>
+        <h2>Map02</h2>
         
     </header>
 
@@ -64,6 +64,11 @@
 
     <footer>
         <!-- add HTML here-->
+        
+        <p>Map authored by Paul Puckett</p>
+        <p>A map of power plants of certain types within 400km of Lexington KY</p>
+        <p>Click on each circle to learn the name, power output, source of power, and distance from Lexington KY
+        </p>
     </footer>
         
         <!-- load external JS file here-->
@@ -88,6 +93,12 @@
         map.addLayer(tiles);
         
         //console.log(plants);
+        
+        var lexKyLocation = L.latLng(38.046384, -84.497023);
+//        var plantLocation = L.latLng(plants.features.geometry.coordinates);
+//        var distFromLex = lexKyLocation.distanceTo(plantLocation);
+        
+    
         plants.features.sort(function(a,b) {
 			return b.properties.capacity - a.properties.capacity;
 		});
@@ -112,10 +123,13 @@
                 var props = feature.properties;
                 var content = "<b>"+props.plant_name+"</b><br>"+
                     props.capacity.toLocaleString()+" MW<br>";
+                    
                 var source = props.source;
                 for(var fuel in source){
                     content+="<b>"+fuel+"</b>: "+source[fuel].toLocaleString()+" MW<br>";
                 }
+                //content+="This plant is " +distanceFromLex+ " from Lexington";
+                
                 layer.bindPopup(content); 
                 
                 layer.on('mouseover', function() {
