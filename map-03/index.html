@@ -171,7 +171,7 @@
         map.on('click', function(e) {
             coalLayer.eachLayer(function(layer) {
                 var distance = e.latlng.distanceTo(layer.getLatLng())/1000;
-                
+            
                     
                 if(distance > 500) {
                     layer.setStyle({
@@ -183,8 +183,15 @@
                         stroke: true,
                         fill: true
                     });
-                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
-                               "km</b><br> from the click point.");
+//                    console.log(layer.feature.properties.fuel_source['Coal']);
+                    var plantName = layer.feature.properties.plant_name;
+                    var fuelSource = layer.feature.properties.fuel_source["Coal"];
+                    var content = "<b>"+plantName+"</b><br>Coal: "+fuelSource.toLocaleString()+" MW<br>"+
+                      "I am <b>"+distance.toLocaleString()+ 
+                               "km</b><br> from the click point."  
+                    layer.bindPopup(content);
+//                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
+//                               "km</b><br> from the click point.");
                 }
             });
         });
@@ -204,8 +211,15 @@
                         stroke: true,
                         fill: true
                     });
-                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
-                               "km</b><br> from the click point.");
+                    var plantName = layer.feature.properties.plant_name;
+                    var fuelSource = layer.feature.properties.fuel_source["Coal"];
+                    var content = "<b>"+plantName+"</b><br>Coal: "+fuelSource.toLocaleString()+" MW<br>"+
+                      "I am <b>"+distance.toLocaleString()+ 
+                               "km</b><br> from the click point."  
+                    layer.bindPopup(content);
+                    
+//                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
+//                               "km</b><br> from the click point.");
                 }
             });
         });
@@ -224,8 +238,16 @@
                         stroke: true,
                         fill: true
                     });
-                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
-                               "km</b><br> from the click point.");
+                    
+                    var plantName = layer.feature.properties.plant_name;
+                    var fuelSource = layer.feature.properties.fuel_source["Natural Gas"];
+                    var content = "<b>"+plantName+"</b><br>Natural Gas: "+fuelSource.toLocaleString()+" MW<br>"+
+                      "I am <b>"+distance.toLocaleString()+ 
+                               "km</b><br> from the click point."  
+                    layer.bindPopup(content);
+                    
+//                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
+//                               "km</b><br> from the click point.");
                 }
             });
         });
@@ -244,8 +266,16 @@
                         stroke: true,
                         fill: true
                     });
-                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
-                               "km</b><br> from the click point.");
+                    
+                    var plantName = layer.feature.properties.plant_name;
+                    var fuelSource = layer.feature.properties.fuel_source["Natural Gas"];
+                    var content = "<b>"+plantName+"</b><br>Natural Gas: "+fuelSource.toLocaleString()+" MW<br>"+
+                      "I am <b>"+distance.toLocaleString()+ 
+                               "km</b><br> from the click point."  
+                    layer.bindPopup(content);
+                    
+//                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
+//                               "km</b><br> from the click point.");
                 }
             });
         });
@@ -264,8 +294,16 @@
                         stroke: true,
                         fill: true
                     });
-                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
-                               "km</b><br> from the click point.");
+                    
+                    var plantName = layer.feature.properties.plant_name;
+                    var fuelSource = layer.feature.properties.fuel_source["Hydro"];
+                    var content = "<b>"+plantName+"</b><br>Hydro: "+fuelSource.toLocaleString()+" MW<br>"+
+                      "I am <b>"+distance.toLocaleString()+ 
+                               "km</b><br> from the click point."  
+                    layer.bindPopup(content);
+                    
+//                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
+//                               "km</b><br> from the click point.");
                 }
             });
         });
@@ -284,8 +322,16 @@
                         stroke: true,
                         fill: true
                     });
-                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
-                               "km</b><br> from the click point.");
+                    
+                    var plantName = layer.feature.properties.plant_name;
+                    var fuelSource = layer.feature.properties.fuel_source["Hydro"];
+                    var content = "<b>"+plantName+"</b><br>Hydro: "+fuelSource.toLocaleString()+" MW<br>"+
+                      "I am <b>"+distance.toLocaleString()+ 
+                               "km</b><br> from the click point."  
+                    layer.bindPopup(content);
+                    
+//                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
+//                               "km</b><br> from the click point.");
                 }
             });
         });
