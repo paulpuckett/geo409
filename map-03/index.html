@@ -73,14 +73,17 @@
     <script>
         var options = {
             center: [36,-94],
-            zoom: 4
+            zoom: 4,
+            doubleClickZoom: false
         }
         var map = L.map('map', options);
         var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
             attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
             subdomains: '0123',
             minZoom: 2,
-            maxZoom: 18
+            maxZoom: 18,
+//            doubleClickZoom: false
+            
         });
         map.addLayer(tiles);
         
@@ -186,11 +189,52 @@
             });
         });
         
+        map.on('dblclick', function(e) {
+            coalLayer.eachLayer(function(layer) {
+                var distance = e.latlng.distanceTo(layer.getLatLng())/1000;
+                
+                    
+                if(distance > 200) {
+                    layer.setStyle({
+                        stroke: false,
+                        fill: false
+                    });
+                } else {
+                    layer.setStyle({
+                        stroke: true,
+                        fill: true
+                    });
+                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
+                               "km</b><br> from the click point.");
+                }
+            });
+        });
+        
         map.on('click', function(e) {
             naturalGasLayer.eachLayer(function(layer) {
                 var distance = e.latlng.distanceTo(layer.getLatLng())/1000;  
                 
                 if(distance > 500) {
+                    layer.setStyle({
+                        stroke: false,
+                        fill: false
+                    });
+                } else {
+                    layer.setStyle({
+                        stroke: true,
+                        fill: true
+                    });
+                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
+                               "km</b><br> from the click point.");
+                }
+            });
+        });
+        
+        map.on('dblclick', function(e) {
+            naturalGasLayer.eachLayer(function(layer) {
+                var distance = e.latlng.distanceTo(layer.getLatLng())/1000;  
+                
+                if(distance > 200) {
                     layer.setStyle({
                         stroke: false,
                         fill: false
@@ -226,9 +270,29 @@
             });
         });
         
+        map.on('dblclick', function(e) {
+            hydroLayer.eachLayer(function(layer) {
+                var distance = e.latlng.distanceTo(layer.getLatLng())/1000;  
+                
+                if(distance > 200) {
+                    layer.setStyle({
+                        stroke: false,
+                        fill: false
+                    });
+                } else {
+                    layer.setStyle({
+                        stroke: true,
+                        fill: true
+                    });
+                    layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
+                               "km</b><br> from the click point.");
+                }
+            });
+        });
+        
         function getRadius(val) {
             var radius = Math.sqrt(val/Math.PI);
-            return radius * .8;
+            return radius * .5;
         }
         
         var sourcesLayers = {
