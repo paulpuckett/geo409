@@ -114,7 +114,8 @@
                 });
             },
             filter: function(feature, layer) {
-                if(feature.properties.source.Coal &&
+                var featureCoords = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]);
+                if(featureCoords.distanceTo(lexKyLocation)/1000 < 400 && feature.properties.source.Coal &&
                   feature.properties.source.Coal < 500){
                     return feature;   
                 }
@@ -123,12 +124,12 @@
                 var props = feature.properties;
                 var content = "<b>"+props.plant_name+"</b><br>"+
                     props.capacity.toLocaleString()+" MW<br>";
-                    
+                var distance  = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]).distanceTo(lexKyLocation)/1000
                 var source = props.source;
                 for(var fuel in source){
                     content+="<b>"+fuel+"</b>: "+source[fuel].toLocaleString()+" MW<br>";
                 }
-                content+="This plant is <b>DISTANCE</b> from Lexington";
+                content+="This plant is <b>" + distance.toLocaleString() + "</b> km from Lexington";
                 
                 layer.bindPopup(content); 
                 
