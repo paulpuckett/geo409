@@ -8,6 +8,7 @@
 
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="simple_statistics.js"></script></script>
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -87,6 +88,17 @@
         }
         
         var map = L.map('map', options);
+        var dataLayer,
+            attribute = "OWNED_MORT",
+            norm = "OWNER";
+        
+        var values = [];
+        
+        dataLayer.eachLayer(function(layer) {
+            var value = layer.feature.properties[attribute]/layer.feature.properties[norm];
+            values.push(value);
+        });
+        console.log(values);
         
         jQuery.getJSON("ky_counties_housing.json", function(data) {
 //            console.log(data);
@@ -100,7 +112,31 @@
                     };
                 }
             }).addTo(map);
+            
+            drawMap();
+            
         });
+        
+        function drawMap() {
+            
+            var breaks = getClassBreaks();
+            
+        }
+        
+        function getClassBreaks() {
+            
+            var values = [];
+            
+            dataLayer.eachLayer(function(layer) {
+                var value = layer.feature.properties[attribute]/layer.feature.properties[norm];
+                values.push(value);
+            
+        });
+            
+        var breaks = ss.jenks(values, 5);
+            console.log(breaks)
+            return breaks;
+        }
         
         
 
