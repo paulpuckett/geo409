@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Geo409 Task F Starter</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        p.author-info {
+            text-align: right;
+            font-style: italic;
+        }
+        /* Additional style rules go here! */
+        
+        .blue {
+            color: #165bb6;
+        }
+        .red {
+            color: #cc0000;
+        }
+        .purple {
+            color: #b6165b; 
+        }
+        
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>GEO409</h1>
+        <h2>Task F Review</h2>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>
+        <p class = author-info>Map authored by Paul Puckett</p>
+        <p>Additional information about the data and map goes here.</p>
+        <p>Stuff</p>
+    </footer>
+
+    <script>
+
+        var map = L.map('map', {
+            center: [38.96,-85.36],
+            zoom: 7,
+        });
+       
+        var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
+            minZoom: 4,
+            maxZoom: 12
+        });
+        map.addLayer(tiles);
+        
+        // Begin writing/modifying code for Task F here
+        
+        var cities = [
+             {
+                 name: "Louisville",
+                 properties: {
+                     coordinates: [38.25, -85.7667],
+                     population: 756832,
+                     state: "KY"
+                 }
+             },
+            {
+                name: "Indianapolis",
+                properties: {
+                    coordinates: [39.766667, -86.15],
+                    population: 820445,
+                    state: "IN"
+                }
+            },
+            {
+                name: "Columbus",
+                properties: {
+                    coordinates: [39.983333, -82.983333],
+                    population: 787033,
+                    state: "OH"
+                }
+            }   
+            
+        ];
+        
+        for (i = 0; i < cities.length; i++) {
+            
+            var props = cities[i].properties;
+            var popup = buildPopup (cities[i].name, props.population, props.state);
+            
+            L.marker(props.coordinates).addTo(map)
+                .bindPopup(popup);
+            
+//            if (cities[i].properties.population > 800000) {
+//                console.log(cities[i].name+ " is a big fucking city.");
+//            }
+        }
+        
+        function buildPopup (name, pop, state) {
+            if(state == "KY") {
+                var colorClass = "blue";
+            } else if (state == "IN") {
+                var colorClass = "red";
+            } else if (state == "OH") {
+                var colorClass = "purple";
+            }
+            
+            var popuptext = "<div class='"+colorClass+"'><b>"+name+"</b><br>"+
+                "<b>Population</b>: "+pop.toLocaleString()+"<div>";
+            
+            return popuptext;
+        }
+        
+        
+                        
+            
+        // End code for Task F
+        
+          
+    </script>
+    
+</body>
+
+</html>
