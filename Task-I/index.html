@@ -139,6 +139,9 @@
                 layer.setStyle({
                     fillColor: getColor(layer.feature.properties[attribute]/layer.feature.properties[norm], breaks)
                 });
+                layer.bindPopup("<b>"+layer.feature.properties["NAME"]+" County</b></br>" +
+                                attribute + ": " +
+                                ((layer.feature.properties[attribute]/layer.feature.properties[norm])*100).toLocaleString());  
             });
             drawLegend(breaks);
             
