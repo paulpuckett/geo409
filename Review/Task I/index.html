@@ -84,7 +84,7 @@
 <body>
     <header>
         <h1>GEO409</h1>
-        <h2>Lab 13 Session Review</h2>
+        <h2>GEO 409 Task I review</h2>
     </header>
 
     <div id='map'></div>
@@ -92,8 +92,7 @@
     <footer>
         <p class=author-info>Map authored by Paul Puckett</p>
         <p>Additional information about the data and map goes here.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.
-        </p>
+        <p>Stuff</p>
     </footer>
 
     <script>
@@ -114,8 +113,8 @@
         var map = L.map('map', options);
         
         var dataLayer,
-            attribute = "OWNED_MORT",
-            norm = "OWNER";
+            attribute = "OCCUPIED",
+            norm = "TOTAL";
         
         $.getJSON("ky_counties_housing.json", function(data) {
             // the line above gets the data, the line below adds it to the map
