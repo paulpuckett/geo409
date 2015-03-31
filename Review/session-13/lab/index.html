@@ -77,6 +77,17 @@
         // WRITE YOUR CODE JAVASCRIPT CODE HERE
         
         jQuery("h1").html("Housing Ownership in Kentucky");
+        
+        var options = {
+            center: [37.8, -85.8],
+            zoom: 7.4,
+            minZoom: 7.4,
+            maxZoom: 7.4,
+            dragging: false,
+            zoomControl: false,
+        }
+        
+        var map = L.map('map', options);
 
     </script>
     
