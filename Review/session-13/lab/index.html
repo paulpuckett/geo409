@@ -136,6 +136,20 @@
             
         }
         
+        function getColor(d, breaks) {
+        if(d <= breaks[1]) {
+            return '#f1eef6';
+        } else if(d <= breaks[2]) {
+            return '#bdc9e1';
+        } else if(d <= breaks[3]) {
+            return '#74a9cf';
+        } else if(d <= breaks[4]) {
+            return '#2b8cbe'
+        } else if(d <= breaks[5]) {
+            return '#045a8d'
+        }
+    }
+        
         
 
     </script>
