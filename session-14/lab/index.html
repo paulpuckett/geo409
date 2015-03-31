@@ -191,7 +191,7 @@
             }
         }
         
-        function drawLegend(breaks) {
+        function drawLegend() {
             
             var legend = L.control({position: 'topleft'});
 
@@ -199,19 +199,8 @@
                 
                 var div = L.DomUtil.create('div', 'legend');
                 
-                div.innerHTML = "<h3>" + attribute + " per " + norm + "</h3><ul>"; 
-
-                for (var i = 0; i < breaks.length-1; i++) {
-                    var color = getColor(breaks[i + 1], breaks);
-                    div.innerHTML +=
-                        '<li><span style="background:' + color + '"></span> ' +
-                        (breaks[i]*100).toLocaleString() + ' &mdash; ' + 
-                        (breaks[i + 1]*100).toLocaleString() + '</li>';
-                }
-                div.innerHTML += "</ul>"
                 return div;
                 
-                    
             };
 
             legend.addTo(map);
@@ -233,8 +222,23 @@
             
             attribute = $(this).val();
             
+            drawMap();
+            
         });
             
+        }
+        
+        function updateLegend(breaks) {
+
+        var legend = $('.legend').html("<h3>" + attribute + "</h3><ul>"); 
+
+        for (var i = 0; i < breaks.length-1; i++) {
+            var color = getColor(breaks[i + 1], breaks);
+            legend.append('<li><span style="background:' + color + '"></span> ' +
+                (breaks[i]*100).toLocaleString() + ' &mdash; ' + 
+                (breaks[i + 1]*100).toLocaleString() + '</li>');
+        }
+        legend.append("</ul>");
         }
 
     </script>
