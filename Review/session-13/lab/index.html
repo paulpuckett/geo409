@@ -122,7 +122,11 @@
                 var value = layer.feature.properties[attribute]/layer.feature.properties[norm];
                 values.push(value);
             });
-            console.log(values);
+//            console.log(values);
+            
+            var breaks = ss.jenks(values, 5);
+            console.log(breaks)
+            return breaks;
             
         }
         
