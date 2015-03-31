@@ -88,6 +88,12 @@
         }
         
         var map = L.map('map', options);
+        
+        $.getJSON("ky_counties_housing.json", function(data) {
+            // the data loaded from the file is accessible here!
+            console.log(data);
+        });
+        
 
     </script>
     
