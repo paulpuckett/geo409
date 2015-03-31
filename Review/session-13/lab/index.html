@@ -112,6 +112,12 @@
             
             var breaks = getClassBreaks();
             
+            dataLayer.eachLayer(function(layer) {
+                layer.setStyle({
+                    fillColor: getColor(layer.feature.properties[attribute]/layer.feature.properties[norm], breaks)
+                });
+            });
+            
         }
         
         function getClassBreaks() {
