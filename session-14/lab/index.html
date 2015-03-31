@@ -138,6 +138,8 @@
             }).addTo(map);
             
             drawMap();
+            
+            ui();
               
         });
         
@@ -213,6 +215,20 @@
             };
 
             legend.addTo(map);
+        }
+        
+        function ui() {
+            
+            var dataView = L.control({position: 'topleft'});
+
+        dataView.onAdd = function(map) {
+
+            var controls = L.DomUtil.get('ui-controls');
+            return controls;
+        }
+
+        dataView.addTo(map);
+            
         }
 
     </script>
