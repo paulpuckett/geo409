@@ -106,6 +106,7 @@
                     };
                 }
             }).addTo(map);
+            drawMap();
         });
         
         function drawMap() {
@@ -131,7 +132,7 @@
 //            console.log(values);
             
             var breaks = ss.jenks(values, 5);
-            console.log(breaks)
+//            console.log(breaks)
             return breaks;
             
         }
