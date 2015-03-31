@@ -89,9 +89,9 @@
         
         var map = L.map('map', options);
         
-        var dataLayer;
-        var attribute = "OWNED_MORT";
-        var norm = "OWNER";
+        var dataLayer,
+            attribute = "OWNED_MORT",
+            norm = "OWNER";
         
         $.getJSON("ky_counties_housing.json", function(data) {
             // the line above gets the data, the line below adds it to the map
@@ -116,6 +116,12 @@
         function getClassBreaks() {
             
             // code here to determine range and establish classification breaks
+            var values = [];
+            dataLayer.eachLayer(function(layer) {
+                var value = layer.feature.properties[attribute]/layer.feature.properties[norm];
+                values.push(value);
+            });
+            console.log(values);
             
         }
         
