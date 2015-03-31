@@ -99,7 +99,7 @@
         
         // WRITE YOUR CODE JAVASCRIPT CODE HERE
         
-        jQuery("h1").html("Housing Ownership in Kentucky");
+        jQuery("h1").html("Number of Housing Units Occupied");
         
         var options = {
             center: [37.8, -85.8],
@@ -136,9 +136,16 @@
             var breaks = getClassBreaks();
             
             dataLayer.eachLayer(function(layer) {
+                
+                var props = layer.feature.properties;
+                
                 layer.setStyle({
                     fillColor: getColor(layer.feature.properties[attribute]/layer.feature.properties[norm], breaks)
                 });
+                
+                layer.bindPopup("<b>"+props["NAME"]+" County</b></br>" +
+                                attribute + ": " +
+                                ((props[attribute]/props[norm])*100).toLocaleString());  
             });
             
             drawLegend(breaks);
