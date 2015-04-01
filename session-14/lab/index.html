@@ -131,6 +131,7 @@
         
         // Begin module 13 code here
         
+        
         var dataLayer,
             attribute = "OWNED_MORT",
             norm = "OCCUPIED";
@@ -174,7 +175,7 @@
                 });
                 
                 layer.bindPopup("<b>"+props["NAME"]+" County</b></br>" +
-                                attribute + ": " +
+                                labels[attribute] + ": " +
                                 ((props[attribute]/props[norm])*100).toLocaleString());  
             });
         
