@@ -79,6 +79,14 @@
         .leaflet-popup-content {
             max-width: 160px;   
         }
+        .info {
+        padding: 6px 8px;
+        font-size: 1em;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+        text-align: right;   
+        }
         
     </style>
 </head>
@@ -137,6 +145,7 @@
                 }          
             }).addTo(map);
             
+            drawInfo();
             ui();
             drawLegend();
             drawMap();
@@ -156,13 +165,46 @@
                     fillColor: getColor(props[attribute]/
                                         props[norm], breaks)
                 });
+                
+                layer.on('mouseover', function() {
+                    updateInfo(this);
+                });
+                
                 layer.bindPopup("<b>"+props["NAME"]+" County</b></br>" +
                                 attribute + ": " +
                                 ((props[attribute]/props[norm])*100).toLocaleString());  
             });
-            
+        
             updateLegend(breaks);
         }
+        
+        function drawInfo() {
+
+        var info = L.control({position: 'topright'});
+
+        info.onAdd = function(map) {
+
+            var div = L.DomUtil.create('div', 'info');
+
+            return div;  
+
+        }
+        info.addTo(map);
+        }
+        
+        function updateInfo(layer) {
+
+        var props = layer.feature.properties;
+
+        var html = "<h3>"+props['NAME']+" County</h3>"+
+                    "total # occupied units: <b>"+ props["OCCUPIED"]+"</b><br>"+
+                    "# owned with mortgage or loan: <b>"+ props["OWNED_MORT"]+"</b><br>"+
+                    "# owned free and clear: <b>"+ props["OWNED_FREE"]+"</b><br>"+
+                    "# occupied by renters: <b>"+ props["RENTER"]+"</b>"
+
+        $(".info").html(html);
+        }
+        
         
         function getClassBreaks() {
             
