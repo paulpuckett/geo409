@@ -131,6 +131,14 @@
         
         // Begin module 13 code here
         
+        var labels = {
+        "OCCUPIED": "occupied units",
+        "OWNED_MORT": "% occupied housing units owned with mortgage",
+        "OWNED_FREE": "% occupied housing units owned free and clear",
+        "RENTER": "% occupied housing units rented"   
+        }
+        
+        var legend = $('.legend').html("<h3>" + labels[attribute] + "</h3><ul>"); 
         
         var dataLayer,
             attribute = "OWNED_MORT",
@@ -197,6 +205,13 @@
             
 //        info.addTo(map);
 //        $(".info").hide();
+//            
+//        dataLayer.on('mouseover', function() {
+//            $(".info").show();
+//        });
+//        dataLayer.on('mouseout', function() {
+//            $(".info").hide();    
+//        });
             
         }
         
