@@ -294,28 +294,30 @@
         }
         
                 
+        // adds a user interactive pull-down menu to upper left of map        
         function ui() {
             
-            var dataView = L.control({position: 'topleft'});
+            var dataView = L.control({position: 'topleft'}); // assigns position to variable
 
         dataView.onAdd = function(map) {
 
-            var controls = L.DomUtil.get('ui-controls');
+            var controls = L.DomUtil.get('ui-controls');    //reaches back to html div setup for pull-down settings
             return controls;
         }
 
-        dataView.addTo(map);
+        dataView.addTo(map);    // adds pulldown to map per instructions for topleft and div options settings
             
-        $('select[name="vacant"]').change(function() {
+        $('select[name="vacant"]').change(function() {  
             
             attribute = $(this).val();
             
-            drawMap();
+            drawMap();  // redraws map based on new pulldown setting
             
         });
             
         }
         
+        // draws legend template in upper left of div spaces and adds it to the map
         function drawLegend() {
             
             var legend = L.control({position: 'topleft'});
@@ -331,6 +333,7 @@
             legend.addTo(map);
         }
         
+        // updates the legend per the pulldown choice selected
         function updateLegend(breaks) {
 
         var legend = $('.legend').html("<h3>" + attribute + "</h3><ul>"); 
