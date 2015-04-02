@@ -166,9 +166,13 @@
         
         var legend = $('.legend').html("<h3>" + labels[attribute] + "</h3><ul>"); 
         
+        // Global datalayer variable, populated via JSON file below for use by other functions
+        
         var dataLayer,
             attribute = "VACANT_FOR",
             norm = "VACANT";
+        
+        // Retrieve the KY housing JSON file from the project folder, set styles for county polygons, and add to map
         
         $.getJSON("ky_counties_housing.json", function(data) {
             
@@ -183,28 +187,30 @@
                 }          
             }).addTo(map);
             
-            drawInfo();
-            ui();
-            drawLegend();
-            drawMap();
+            drawInfo(); // draw the info table at upper right, see function below
+            ui(); // pulldown menu at upper left, see function below
+            drawLegend(); // legend at upper left below pulldown menu, see function below
+            drawMap(); // retrieves choropleth class info and displays map, see function below
             
               
         });
         
-        function drawMap() {
+        // Function Listings
+        
+        function drawMap() {  //draws choropleth map based on JSON data
             
-            var breaks = getClassBreaks();
+            var breaks = getClassBreaks();  //retrieves normalized value for county, assigns it to break class
 
             dataLayer.eachLayer(function(layer) {
                 
-                var props = layer.feature.properties;
+                var props = layer.feature.properties;  // assign object chain to props for typing simplification
                 
                 layer.setStyle({
                     fillColor: getColor(props[attribute]/
-                                        props[norm], breaks)
+                                        props[norm], breaks)  //uses getColor function to assign color to breaks
                 });
                 
-                layer.on('mouseover', function() {
+                layer.on('mouseover', function() {  //this and bindPopup below allows access to individual county values
                     updateInfo(this);
                 });
                 
@@ -213,65 +219,66 @@
                                 ((props[attribute]/props[norm])*100).toLocaleString());  
             });
         
-            updateLegend(breaks);
+            updateLegend(breaks);  //updates the legend for the pulldown choice selected by user
         }
         
-        function drawInfo() {
+        function drawInfo() {   //creates user info window at upper right of map
 
         var info = L.control({position: 'topright'});
 
         info.onAdd = function(map) {
 
-            var div = L.DomUtil.create('div', 'info');
+            var div = L.DomUtil.create('div', 'info'); // assigns window to div space from html code, and info position
 
             return div;  
 
         }
                 
         info.addTo(map);
-        $(".info").hide();
+        $(".info").hide();  // initially hides info window until user mouses over county
             
-        dataLayer.on('mouseover', function() {
+        dataLayer.on('mouseover', function() {  // displays the info window defined above when user mouses over county
             $(".info").show();
         });
-        dataLayer.on('mouseout', function() {
+        dataLayer.on('mouseout', function() {   // hides info window when user mouses over non-county spaces
             $(".info").hide();    
         });
             
         }
         
-        function updateInfo(layer) {
+        function updateInfo(layer) {    //updates info window with data updated for county user has moused over
 
-        var props = layer.feature.properties;
+        var props = layer.feature.properties;   //simplifies object chain to single variable
 
+        // var html formats and populates info window with data unique to county moused over by user
+            
         var html = "<h3>"+props['NAME']+" County</h3>"+
                     "vacant housing units, out of total: <b>"+ props["VACANT"]+"</b><br>"+
                     "# vacant units for rent: <b>"+ props["VACANT_FOR"]+"</b><br>"+
                     "# vacant units, rented not occupied: <b>"+ props["VACANT_REN"]+"</b><br>"+
                     "# vacant units, for sale only: <b>"+ props["VACANT_FO2"]+"</b>"
-//                    "# vacant units, sole not occupied: <b>"+ props["VACANT_SOL"]+"</b>"
-//                    "# vacant units used seasonally or for recreational use only: <b>"+ props["VACANT_SEA"]+"</b>"
-//                    "# vacant units used for migratory workers: <b>"+ props["VACANT_MIG"]+"</b>"
-//                    "# vacant units, other: <b>"+ props["VACANT_OTH"]+"</b>"
 
-        $(".info").html(html);
+        $(".info").html(html); // assigns .info style rules to html variable text
         }
         
         
-        function getClassBreaks() {
+        function getClassBreaks() { // uses simple statistics library to break data into five separate classes
             
-            var values = [];
+            var values = [];    // empty array to be populated below
             
+            // function below iterates through each JSON layer for normalized county values, pushes them to values array
             dataLayer.eachLayer(function(layer) {
                 var value = layer.feature.properties[attribute]/layer.feature.properties[norm];
                 values.push(value);   
             }); 
             
+            // use simple statistics to assign values array data to five separate classes and return those values
             var breaks = ss.jenks(values, 5);
             return breaks;
             
         }   
         
+        // uses if/else to assign colors via hex values to five break values
         function getColor(d, breaks) {
             if(d <= breaks[1]) {
                 return '#f1eef6';
