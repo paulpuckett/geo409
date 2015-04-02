@@ -220,10 +220,14 @@
         var props = layer.feature.properties;
 
         var html = "<h3>"+props['NAME']+" County</h3>"+
-                    "total # occupied units: <b>"+ props["OCCUPIED"]+"</b><br>"+
-                    "# owned with mortgage or loan: <b>"+ props["OWNED_MORT"]+"</b><br>"+
-                    "# owned free and clear: <b>"+ props["OWNED_FREE"]+"</b><br>"+
-                    "# occupied by renters: <b>"+ props["RENTER"]+"</b>"
+                    "vacant housing units, out of total: <b>"+ props["VACANT"]+"</b><br>"+
+                    "# vacant units for rent: <b>"+ props["VACANT_FOR"]+"</b><br>"+
+                    "# vacant units, rented not occupied: <b>"+ props["VACANT_REN"]+"</b><br>"+
+                    "# vacant units, for sale only: <b>"+ props["VACANT_FO2"]+"</b>"
+                    "# vacant units, sole not occupied: <b>"+ props["VACANT_SOL"]+"</b>"
+                    "# vacant units used seasonally or for recreational use only: <b>"+ props["VACANT_SEA"]+"</b>"
+                    "# vacant units used for migratory workers: <b>"+ props["VACANT_MIG"]+"</b>"
+                    "# vacant units, other: <b>"+ props["VACANT_OTH"]+"</b>"
 
         $(".info").html(html);
         }
