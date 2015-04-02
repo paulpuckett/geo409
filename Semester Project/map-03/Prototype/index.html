@@ -77,18 +77,17 @@
 
     <script>
         var options = {
-            center: [36,-94],
-            zoom: 4,
-            doubleClickZoom: false
+            center: [38.057849, -84.480684],
+            zoom: 14,
+            doubleClickZoom: false,
+            dragging: false,
         }
         var map = L.map('map', options);
         var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
             attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
             subdomains: '0123',
-            minZoom: 2,
-            maxZoom: 18,
-//            doubleClickZoom: false
-            
+            minZoom: 14,
+            maxZoom: 14,
         });
         map.addLayer(tiles);
         
