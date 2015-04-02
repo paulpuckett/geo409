@@ -81,17 +81,25 @@
             zoom: 14,
             doubleClickZoom: false,
             dragging: false,
+            maxbounds: [sw, ne],
         }
         var map = L.map('map', options);
         var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
             attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
             subdomains: '0123',
             minZoom: 14,
-            maxZoom: 14,
+            maxZoom: 18,
         });
         map.addLayer(tiles);
         
         // Begin writing your practice code here
+        
+        var bounds = map.getBounds();
+        var sw = bounds.getSouthWest();
+        var ne = bounds.getNorthEast();
+                
+        console.log("SW is: " +sw+ ".");
+        console.log("NE is: " +ne+ ".");
         
         plants.features.sort(function(a,b) {
 			return b.properties.capacity - a.properties.capacity;
