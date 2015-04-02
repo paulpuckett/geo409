@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Module 12 Lab Practice Template</title>
+    <title>GEO509 Semester Review</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
@@ -44,6 +44,11 @@
             font-size: 1em;
             color: #001323;
         }
+        p.author-info {
+            text-align: right;
+            font-style: italic;
+        }
+        
         /* Additional style rules go here! */
         
         .popup {
@@ -55,16 +60,16 @@
 
 <body>
     <header>
-        <h1>GEO409</h1>
-        <h2>Map 03</h2>
+        <h1>GEO509</h1>
+        <h2>Semester Review</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by Paul Puckett</p>
-        <p>An interactive map for determining power plant proximity, attributes, and distance to a clicked point.</p>
-        <p>User Instructions: point and click map to discover power plants powered by Coal, Hydro-power, and Solar within 500 km of that point.  Double-click to discover the same information for power plants within 200 km of the clicked point. Afterwards, click on any of the plant circles shown to discover the power plant's NAME, FUEL SOURCE, and DISTANCE from click.  If you wish to isolate a specific fuel type, use the toggle boxes at upper right to turn layers ON and OFF.
+        <p class=author-info>Map authored by Koenigsmark, Lynn, and Puckett</p>
+        <p>An interactive map for the consideration of distance versus cost in northeast Lexington.</p>
+        <p>User Instructions: point and click map to discover services available at a block level such as bus stops, medical services and food markets.  Click a location to discover the services closest to that location. Double-click to learn about the time it takes to get their via different modes.  If you wish to isolate a specific service, use the check boxes at upper right to turn layers ON and OFF.
         </p>
     </footer>
     
