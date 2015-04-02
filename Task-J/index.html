@@ -102,10 +102,10 @@
 
     <div id='ui-controls'>
      <label>Choose a data attribute:<br>
-        <select name="occupied">
-            <option value="OWNED_MORT" selected>owned with mortgage</option>
-            <option value="OWNED_FREE">owned free and clear</option> 
-            <option value="RENTER">rented</option>
+        <select name="vacant">
+            <option value="VACANT_FOR" selected>vacant for rent</option>
+            <option value="VACANT_REN">rented but vacant</option> 
+            <option value="VACANT_FO2">vacant for sale only</option>
         </select>
         </label>
     </div>
@@ -132,17 +132,17 @@
         // Begin module 13 code here
         
         var labels = {
-        "OCCUPIED": "occupied units",
-        "OWNED_MORT": "% occupied housing units owned with mortgage",
-        "OWNED_FREE": "% occupied housing units owned free and clear",
-        "RENTER": "% occupied housing units rented"   
+        "VACANT": "vacant units",
+        "VACANT_FOR": "% vacant units for rent",
+        "VACANT_REN": "% vacant unit rented but not occupied",
+        "VACANT_FO2": "% vacant units for sale only"   
         }
         
         var legend = $('.legend').html("<h3>" + labels[attribute] + "</h3><ul>"); 
         
         var dataLayer,
-            attribute = "OWNED_MORT",
-            norm = "OCCUPIED";
+            attribute = "VACANT_FOR",
+            norm = "VACANT";
         
         $.getJSON("ky_counties_housing.json", function(data) {
             
@@ -201,6 +201,7 @@
             return div;  
 
         }
+                
         info.addTo(map);
             
 //        info.addTo(map);
@@ -224,10 +225,10 @@
                     "# vacant units for rent: <b>"+ props["VACANT_FOR"]+"</b><br>"+
                     "# vacant units, rented not occupied: <b>"+ props["VACANT_REN"]+"</b><br>"+
                     "# vacant units, for sale only: <b>"+ props["VACANT_FO2"]+"</b>"
-                    "# vacant units, sole not occupied: <b>"+ props["VACANT_SOL"]+"</b>"
-                    "# vacant units used seasonally or for recreational use only: <b>"+ props["VACANT_SEA"]+"</b>"
-                    "# vacant units used for migratory workers: <b>"+ props["VACANT_MIG"]+"</b>"
-                    "# vacant units, other: <b>"+ props["VACANT_OTH"]+"</b>"
+//                    "# vacant units, sole not occupied: <b>"+ props["VACANT_SOL"]+"</b>"
+//                    "# vacant units used seasonally or for recreational use only: <b>"+ props["VACANT_SEA"]+"</b>"
+//                    "# vacant units used for migratory workers: <b>"+ props["VACANT_MIG"]+"</b>"
+//                    "# vacant units, other: <b>"+ props["VACANT_OTH"]+"</b>"
 
         $(".info").html(html);
         }
@@ -274,7 +275,7 @@
 
         dataView.addTo(map);
             
-        $('select[name="occupied"]').change(function() {
+        $('select[name="vacant"]').change(function() {
             
             attribute = $(this).val();
             
