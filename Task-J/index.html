@@ -114,7 +114,7 @@
     <footer>
         <p>Map authored by Paul Puckett</p>
         <p>A map regarding vacant housing information in Kentucky</p>
-        <p>Choose from the pulldown for more information, or just pass over a county to learn more.</p>
+        <p>Choose from the pulldown for more information statewide, or pass over and click a county to learn more.</p>
     </footer>
 
     <script>
@@ -203,16 +203,14 @@
         }
                 
         info.addTo(map);
+        $(".info").hide();
             
-//        info.addTo(map);
-//        $(".info").hide();
-//            
-//        dataLayer.on('mouseover', function() {
-//            $(".info").show();
-//        });
-//        dataLayer.on('mouseout', function() {
-//            $(".info").hide();    
-//        });
+        dataLayer.on('mouseover', function() {
+            $(".info").show();
+        });
+        dataLayer.on('mouseout', function() {
+            $(".info").hide();    
+        });
             
         }
         
