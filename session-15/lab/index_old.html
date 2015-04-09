@@ -8,6 +8,7 @@
 
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.0/papaparse.min.js"></script>
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -53,7 +54,7 @@
 </head>
 
 <body>
-    <h1>US Unemployment Rates: 2001-2013</h1>
+    <h1>GEO409 Lab 15</h1>
     <div id='map'></div>
     
     <script>
@@ -71,16 +72,70 @@
         // load map tiles and add to map
                 
         // declare global variables
+        
+        var datalayer;
 
         // AJAX requests to load data files
+        
+        
+        $.getJSON("us-states.json", function(states) {
+
+            Papa.parse('states-unemployment.csv', {
+                download: true,
+                header: true,
+                complete: function(data) {
+
+                // data is accessible to us here
+                console.log(data);
+
+                // note that states is also accessible here!
+
+                }
+            }); // end of Papa.parse() 
+
+        });  // end of $.getJSON()
  
         // function to process/bind data
+        
+        function processData(states, data) {
 
+        for (var state in states.features) {
+
+        var props = states.features[state].properties;
+
+        for(var d in data.data) {
+           if(props.STATEFP == data.data[d].STATE_FIP) {
+              states.features[state].properties = data.data[d]; 
+              break;
+           }  
+        } // inner for loop is complete
+
+    } // outer for loop is complete
+    console.log(states);
+
+    }
+        
         // function to draw the map
         
         // function to update the map
         
-        // function get the class breaks   
+        // function get the class breaks
+        
+        function getClassBreaks() { // uses simple statistics library to break data into five separate classes
+            
+            var values = [];    // empty array to be populated below
+            
+            // function below iterates through each JSON layer for normalized county values, pushes them to values array
+            dataLayer.eachLayer(function(layer) {
+                var value = layer.feature.properties[attribute]/layer.feature.properties[norm];
+                values.push(value);   
+            }); 
+            
+            // use simple statistics to assign values array data to five separate classes and return those values
+            var breaks = ss.jenks(values, 5);
+            return breaks;
+            
+        }   
         
         // function to get the color value
                 
