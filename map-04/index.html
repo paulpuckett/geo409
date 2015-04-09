@@ -58,19 +58,30 @@
     <h1>GEO409 Map04</h1>
     <div id='map'></div>
     
+    <script src = "ky-counties.json"></script>
+    <script src = "ky-unemployment-data.csv"></script>
+    
     <script>
         
         var options = {
             center: [38.2, -85.8],
-            zoom: 7.4,
-            minZoom: 7.4,
-            maxZoom: 7.4,
+            zoom: 7,
+            minZoom: 7,
+            maxZoom: 7,
             dragging: false,
             zoomControl: false
         }
         var map = L.map('map', options);
         
         // load map tiles and add to map
+        
+        var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
+            minZoom: 7,
+            maxZoom: 7,            
+        });
+        map.addLayer(tiles);
                 
         // declare global variables
         
@@ -80,6 +91,19 @@
         
         $.getJSON("ky-counties.json", function(counties) {
 
+            // create Leaflet data layer and add to map
+            dataLayer = L.geoJson(counties, {
+                 style: function(feature) {
+                    // style counties with initial default path options
+                    return {
+                            color: '#001323',
+                            weight: 2,
+                            fillOpacity: 1,
+                            fillColor: 'whitesmoke'
+                        };
+                 }
+            }).addTo(map);
+            
             Papa.parse("ky-unemployment-data.csv", {
                 download: true,
                 header: true,
@@ -153,10 +177,11 @@
         // var html formats and populates info window with data unique to county moused over by user
             
         var html = "<h3>"+props['NAME']+" County</h3>"+
-                    "vacant housing units, out of total: <b>"+ props["VACANT"]+"</b><br>"+
-                    "# vacant units for rent: <b>"+ props["VACANT_FOR"]+"</b><br>"+
-                    "# vacant units, rented not occupied: <b>"+ props["VACANT_REN"]+"</b><br>"+
-                    "# vacant units, for sale only: <b>"+ props["VACANT_FO2"]+"</b>"
+//                    Update for Map 4
+//                    "vacant housing units, out of total: <b>"+ props["VACANT"]+"</b><br>"+
+//                    "# vacant units for rent: <b>"+ props["VACANT_FOR"]+"</b><br>"+
+//                    "# vacant units, rented not occupied: <b>"+ props["VACANT_REN"]+"</b><br>"+
+//                    "# vacant units, for sale only: <b>"+ props["VACANT_FO2"]+"</b>"
 
         $(".info").html(html); // assigns .info style rules to html variable text
         }

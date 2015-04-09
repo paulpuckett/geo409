@@ -119,7 +119,23 @@
         
         // function to update the map
         
-        // function get the class breaks   
+        // function get the class breaks
+        
+        function getClassBreaks() { // uses simple statistics library to break data into five separate classes
+            
+            var values = [];    // empty array to be populated below
+            
+            // function below iterates through each JSON layer for normalized county values, pushes them to values array
+            dataLayer.eachLayer(function(layer) {
+                var value = layer.feature.properties[attribute]/layer.feature.properties[norm];
+                values.push(value);   
+            }); 
+            
+            // use simple statistics to assign values array data to five separate classes and return those values
+            var breaks = ss.jenks(values, 5);
+            return breaks;
+            
+        }   
         
         // function to get the color value
                 
