@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Module 15 Lab Template</title>
+    <title>GEO409 Map04</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
@@ -103,9 +103,9 @@
  
         // function to process/bind data
         
-        $.getJSON("us-states.json", function(states) {
+        $.getJSON("ky-counties.json", function(states) {
 
-        Papa.parse('states-unemployment.csv', {
+        Papa.parse('kentucky-unemployment-data.csv', {
             download: true,
             header: true,
             complete: function(data) {
@@ -114,6 +114,7 @@
                 console.log(data);
 
                 // note that states is also accessible here!
+                console.log(states);
 
             }
         }); // end of Papa.parse() 
