@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.0/papaparse.min.js"></script>
+    <script src="simple_statistics.js"></script>
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -141,11 +142,53 @@
 
         // function to draw the map
         
+        function drawMap() {
+
+        var breaks = getClassBreaks();
+
+    }
+        
         // function to update the map
         
-        // function get the class breaks   
+        // function get the class breaks
+        
+        function getClassBreaks() {
+
+        // code here to determine range and establish classification breaks
+            
+        dataLayer.eachLayer(function(layer) {
+            layer.setStyle({
+            fillColor: getColor(layer.feature.properties[attribute]/layer.feature.properties[norm], breaks)
+        });
+    });
+            
+        var values = [];
+        dataLayer.eachLayer(function(layer) {
+            var value = layer.feature.properties[attribute]/layer.feature.properties[norm];
+            values.push(value);   
+        }); 
+        console.log(values);
+            
+        var breaks = ss.jenks(values, 5);
+        console.log(breaks)
+        return breaks;
+    }        
         
         // function to get the color value
+        
+        function getColor(d, breaks) {
+        if(d <= breaks[1]) {
+            return '#f1eef6';
+        } else if(d <= breaks[2]) {
+            return '#bdc9e1';
+        } else if(d <= breaks[3]) {
+            return '#74a9cf';
+        } else if(d <= breaks[4]) {
+            return '#2b8cbe'
+        } else if(d <= breaks[5]) {
+            return '#045a8d'
+        }
+    }
                 
         // function to draw the legend
         
