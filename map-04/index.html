@@ -55,11 +55,8 @@
 </head>
 
 <body>
-    <h1>GEO409 Map04</h1>
+    <h1>Kentucky Unemployment Rates: 2000 - 2013</h1>
     <div id='map'></div>
-    
-    <script src = "ky-counties.json"></script>
-    <script src = "ky-unemployment-data.csv"></script>
     
     <script>
         
@@ -109,6 +106,8 @@
                 header: true,
                 complete: function(data) {
 
+                    processData(counties, data);
+                    
                     // data is accessible to us here
                     console.log(data);
 
@@ -126,7 +125,7 @@
 
             for (var state in counties.features) {
 
-            var props = counties.features[county].properties;
+            var props = counties.features[counties].properties;
 
             for(var d in data.data) {
                 if(props.COUNTYFP == data.data[d].COUNTY_FIP) {
