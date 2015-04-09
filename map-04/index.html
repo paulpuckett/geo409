@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.0/papaparse.min.js"></script>
+    <script src="simple_statistics.js"></script>
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -54,18 +55,18 @@
 </head>
 
 <body>
-    <h1>GEO409 Lab 15</h1>
+    <h1>GEO409 Map04</h1>
     <div id='map'></div>
     
     <script>
         
         var options = {
-            center: [38.2, -94],
-            zoom: 4,
-            minZoom: 4,
-            maxZoom: 6,
-            dragging: true,
-            zoomControl: true
+            center: [38.2, -85.8],
+            zoom: 7.4,
+            minZoom: 7.4,
+            maxZoom: 7.4,
+            dragging: false,
+            zoomControl: false
         }
         var map = L.map('map', options);
         
@@ -77,61 +78,155 @@
 
         // AJAX requests to load data files
         
-        
-//        $.getJSON("us-states.json", function(states) {
-//
-//            console.log(states);
-//            
-//            dataLayer = L.geoJson(states, {
-//                 style: function(feature) {
-//                    return {
-//                            color: '#0D0000',
-//                            weight: 2,
-//                            fillOpacity: 1,
-//                            fillColor: 'whitesmoke'
-//                        };
-//                 }
-//            }).addTo(map);
-//            
-//            // did the data file successfully load?
-//
-//        })
-//        .fail(function() {
-//        // the data file failed to load
-//            console.log("Ruh roh! An error has occurred." );
-//        });
- 
+        $.getJSON("ky-counties.json", function(counties) {
+
+            Papa.parse("ky-unemployment-data.csv", {
+                download: true,
+                header: true,
+                complete: function(data) {
+
+                    // data is accessible to us here
+                    console.log(data);
+
+                    // note that states is also accessible here!
+                    console.log(counties);
+
+                }
+            }); // end of Papa.parse() 
+
+        });  // end of $.getJSON()
+         
         // function to process/bind data
         
-        $.getJSON("ky-counties.json", function(states) {
+        function processData(counties, data) {
 
-        Papa.parse('kentucky-unemployment-data.csv', {
-            download: true,
-            header: true,
-            complete: function(data) {
+            for (var state in counties.features) {
 
-                // data is accessible to us here
-                console.log(data);
+            var props = counties.features[county].properties;
 
-                // note that states is also accessible here!
-                console.log(states);
+            for(var d in data.data) {
+                if(props.COUNTYFP == data.data[d].COUNTY_FIP) {
+                counties.features[county].properties = data.data[d]; 
+                break;
+                }  
+            } // inner for loop is complete
 
-            }
-        }); // end of Papa.parse() 
+        } // outer for loop is complete
+        console.log(counties);
 
-    });  // end of $.getJSON()
+        }
         
+            
         // function to draw the map
+        
+        function drawMap() {  //draws choropleth map based on JSON data
+            
+            var breaks = getClassBreaks();  //retrieves normalized value for county, assigns it to break class
+
+            dataLayer.eachLayer(function(layer) {
+                
+                var props = layer.feature.properties;  // assign object chain to props for typing simplification
+                
+                layer.setStyle({
+                    fillColor: getColor(props[attribute]/
+                                        props[norm], breaks)  //uses getColor function to assign color to breaks
+                });
+                
+                layer.on('mouseover', function() {  //this and bindPopup below allows access to individual county values
+                    updateInfo(this);
+                });
+                
+                layer.bindPopup("<b>"+props["NAME"]+" County</b></br>" +
+                                labels[attribute] + ": " +
+                                ((props[attribute]/props[norm])*100).toLocaleString());  
+            });
+        
+            updateLegend(breaks);  //updates the legend for the pulldown choice selected by user
+        }
         
         // function to update the map
         
-        // function get the class breaks   
+        function updateInfo(layer) {    //updates info window with data updated for county user has moused over
+
+        var props = layer.feature.properties;   //simplifies object chain to single variable
+
+        // var html formats and populates info window with data unique to county moused over by user
+            
+        var html = "<h3>"+props['NAME']+" County</h3>"+
+                    "vacant housing units, out of total: <b>"+ props["VACANT"]+"</b><br>"+
+                    "# vacant units for rent: <b>"+ props["VACANT_FOR"]+"</b><br>"+
+                    "# vacant units, rented not occupied: <b>"+ props["VACANT_REN"]+"</b><br>"+
+                    "# vacant units, for sale only: <b>"+ props["VACANT_FO2"]+"</b>"
+
+        $(".info").html(html); // assigns .info style rules to html variable text
+        }
+        
+        // function get the class breaks 
+        
+        function getClassBreaks() { // uses simple statistics library to break data into five separate classes
+            
+            var values = [];    // empty array to be populated below
+            
+            // function below iterates through each JSON layer for normalized county values, pushes them to values array
+            dataLayer.eachLayer(function(layer) {
+                var value = layer.feature.properties[attribute]/layer.feature.properties[norm];
+                values.push(value);   
+            }); 
+            
+            // use simple statistics to assign values array data to five separate classes and return those values
+            var breaks = ss.jenks(values, 5);
+            return breaks;
+            
+        }   
         
         // function to get the color value
+        
+        // uses if/else to assign colors via hex values to five break values
+        function getColor(d, breaks) {
+            if(d <= breaks[1]) {
+                return '#f1eef6';
+            } else if(d <= breaks[2]) {
+                return '#bdc9e1';
+            } else if(d <= breaks[3]) {
+                return '#74a9cf';
+            } else if(d <= breaks[4]) {
+                return '#2b8cbe'
+            } else if(d <= breaks[5]) {
+                return '#045a8d'
+            }
+        }
                 
         // function to draw the legend
         
+        function drawLegend() {
+            
+            var legend = L.control({position: 'topleft'});
+
+            legend.onAdd = function (map) {
+                
+                var div = L.DomUtil.create('div', 'legend');
+                
+                return div;
+                
+            };
+
+            legend.addTo(map);
+        }
+        
         // function to update the legend
+        
+        function updateLegend(breaks) {
+
+        var legend = $('.legend').html("<h3>" + attribute + "</h3><ul>"); 
+
+        for (var i = 0; i < breaks.length-1; i++) {
+            var color = getColor(breaks[i + 1], breaks);
+            legend.append('<li><span style="background:' + color + '"></span> ' +
+                (breaks[i]*100).toLocaleString() + ' &mdash; ' + 
+                (breaks[i + 1]*100).toLocaleString() + '</li>');
+        }
+        legend.append("</ul>");
+        }
 
         // function to create the range slider
 

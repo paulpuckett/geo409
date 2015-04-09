@@ -78,47 +78,42 @@
         // AJAX requests to load data files
         
         
-//        $.getJSON("us-states.json", function(states) {
-//
-//            console.log(states);
-//            
-//            dataLayer = L.geoJson(states, {
-//                 style: function(feature) {
-//                    return {
-//                            color: '#0D0000',
-//                            weight: 2,
-//                            fillOpacity: 1,
-//                            fillColor: 'whitesmoke'
-//                        };
-//                 }
-//            }).addTo(map);
-//            
-//            // did the data file successfully load?
-//
-//        })
-//        .fail(function() {
-//        // the data file failed to load
-//            console.log("Ruh roh! An error has occurred." );
-//        });
- 
-        // function to process/bind data
-        
         $.getJSON("us-states.json", function(states) {
 
-        Papa.parse('states-unemployment.csv', {
-            download: true,
-            header: true,
-            complete: function(data) {
+            Papa.parse('states-unemployment.csv', {
+                download: true,
+                header: true,
+                complete: function(data) {
 
                 // data is accessible to us here
                 console.log(data);
 
                 // note that states is also accessible here!
 
-            }
-        }); // end of Papa.parse() 
+                }
+            }); // end of Papa.parse() 
 
-    });  // end of $.getJSON()
+        });  // end of $.getJSON()
+ 
+        // function to process/bind data
+        
+        function processData(states, data) {
+
+        for (var state in states.features) {
+
+        var props = states.features[state].properties;
+
+        for(var d in data.data) {
+           if(props.STATEFP == data.data[d].STATE_FIP) {
+              states.features[state].properties = data.data[d]; 
+              break;
+           }  
+        } // inner for loop is complete
+
+    } // outer for loop is complete
+    console.log(states);
+
+    }
         
         // function to draw the map
         
