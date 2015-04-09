@@ -8,6 +8,7 @@
 
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.0/papaparse.min.js"></script>
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -69,12 +70,74 @@
         var map = L.map('map', options);
         
         // load map tiles and add to map
+        
+        var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
+            minZoom: 4,
+            maxZoom: 6,            
+        });
+        map.addLayer(tiles);
                 
         // declare global variables
+        
+        var dataLayer,
+        attribute = "OWNED_MORT",
+        norm = "OWNER";
 
         // AJAX requests to load data files
- 
+        
+        $.getJSON("us-states.json", function(states) {
+
+            Papa.parse('states-unemployment.csv', {
+                download: true,
+                header: true,
+                complete: function(data) {
+
+                    processData(states, data);
+                    
+            dataLayer = L.geoJson(states, {
+             style: function(feature) {
+                return {
+                        color: '#0D0000',
+                        weight: 1,
+                        fillOpacity: 1,
+                        fillColor: 'whitesmoke'
+                    };
+            }          
+        }).addTo(map);
+                    
+                // data is accessible to us here
+//                console.log(data);
+
+                // note that states is also accessible here!
+//                console.log(states);
+
+                }
+        }); // end of Papa.parse() 
+        
+    }); // end of $.getJSON()
+     
         // function to process/bind data
+        
+        function processData(states, data) {
+
+        // code goes here
+        for (var state in states.features) {
+
+        var props = states.features[state].properties;
+
+        for(var d in data.data) {
+           if(props.STATEFP == data.data[d].STATE_FIP) {
+              states.features[state].properties = data.data[d]; 
+              break;
+           }  
+        } // inner for loop is complete
+
+    } // outer for loop is complete
+    console.log(states);
+
+    }
 
         // function to draw the map
         
