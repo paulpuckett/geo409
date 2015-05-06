@@ -14,7 +14,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: whitesmoke;
+            background: #cef4ff;
             font-family: Lato, sans-serif;
             color: #0D0000;
         }
@@ -31,7 +31,7 @@
             color: #001323;
         }
         #map {
-            width: 80%;
+            width: 90%;
             height: 580px;
             margin: 10px auto;
         }
@@ -63,11 +63,7 @@
         
         <p>An interactive map for identifying services in Northeast Lexington and Modal Attributes associated with each service.</p>
         
-        <p>Cost=Access! Per AAA, the average annual cost of maintaining a small sedan is $6957, or $19.33 per day. Via bicycling.com, the cost of maintaining a bicycle is $300 a year, or 82 cents per day. Purchasing a monthly Lextran bus pass averages to approximately $1 a day.  As such, assuming a 25mph city driving speed, access to a car cost 24 times that of a bike and reduces travel time by almost two-thirds. Buses provide longer distance access but on fixed routes and times. As for walking, almost $20 per day reduces a 3 mile trip from an hour to 7 minutes. If you can afford it.
-        </p>
         
-        <p>User Instructions: click on a location in the map boundary.  Then click on a service to discover the time associated with traveling to that service on foot, via bicycle, or automobile. Refresh the browser to start over.
-        </p>
     </header>
 
     <div id='map'></div>
@@ -75,6 +71,11 @@
     <footer>
         <p class=author-info>Map authored by Koenigsmark, Lynn, and Puckett</p>
         
+        <p>Cost=Access! Per AAA, the average annual cost of maintaining a small sedan is $6957, or $19.33 per day. Via bicycling.com, the cost of maintaining a bicycle is $300 a year, or 82 cents per day. Purchasing a monthly Lextran bus pass averages to approximately $1 a day.  As such, assuming a 25mph city driving speed, access to a car cost 24 times that of a bike and reduces travel time by almost two-thirds. Buses provide longer distance access but on fixed routes and times. As for walking, almost $20 per day reduces a 3 mile trip from an hour to 7 minutes. If you can afford it.
+        </p>
+        
+        <p>User Instructions: click on a location in the map boundary.  Then click on a service to discover the time associated with traveling to that service on foot, via bicycle, or automobile. Double click the map to show an illustration of the area that falls within a ten minute walking distance. Refresh the browser to start over.
+        </p>
     </footer>
     
 <!--    load geoJSON files used in this project-->
@@ -87,7 +88,8 @@
             center: [38.057849, -84.480684],
             zoom: 14,
             doubleClickZoom: false,
-            dragging: false
+            dragging: true,
+            scrollWheelZoom: false
         }
         
 //        define map variable and connect it to div space in html code above
@@ -108,143 +110,116 @@
         
 //        console.log(services);
         
+         var MarkerIcon = L.Icon.extend({
+            options : {
+                iconSize : [25.6, 38.3],
+                iconAnchor : [11.5, 19]
+            }
+        });
+        
+        var busIcon = new MarkerIcon({iconUrl: 'bus_stop.png'}),
+            marketIcon = new MarkerIcon({iconUrl:'market.png'}),
+            hospitalIcon = new MarkerIcon({iconUrl : 'hospital.png'});
+            childcareIcon = new MarkerIcon({iconUrl : 'childcare.png'});
+            pharmacyIcon = new MarkerIcon ({iconUrl : 'pharmacy.png'});
+            marketSelectIcon = new MarkerIcon ({iconUrl : 'market_yellow.png'});
+            hospitalSelectIcon = new MarkerIcon ({iconUrl : 'hospital_yellow.png'});
+            childcareSelectIcon = new MarkerIcon ({iconUrl : 'childcare_yellow.png'});
+            pharmacySelectIcon = new MarkerIcon ({iconUrl : 'pharmacy_yellow.png'});
+        
 //        locate hospital objects in services_3 geoJSON, add them to map, with popup info available
         var hospital = L.geoJson(services, {
             pointToLayer: function(feature,latlng) {
-                return L.circleMarker(latlng, {
-                    color: 'blue',
-                    weight: 4,
-                    fillColor: 'blue',
-                    fillOpacity: 0.5,
-                    radius: 10
+                var hMarker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {icon: hospitalIcon});
+                hMarker.on('mouseover', function(e) {
+                    hMarker.setIcon(hospitalSelectIcon);
                 });
+                hMarker.on('mouseout', function(e) {
+                    hMarker.setIcon(hospitalIcon);
+                });
+                return hMarker
             },
-//            filter by service type within services_3 geoJSON
             filter: function(feature, layer) {
                 if(feature.properties.service_type == "Hospital"){
                     return feature;
                 }
             },
-//            create popup feature for site information with user affordance in contrasting color
             onEachFeature: function(feature, layer) {
                 var props = feature.properties;
                 var content = "<b>" +props.service_name+ "</b></br>" +props.address;
                 layer.bindPopup(content);
-                layer.on('mouseover', function() {
-                    layer.setStyle({
-                        fillColor: 'yellow'
-                    });
-                });
-                layer.on('mouseout', function() {
-                    layer.setStyle({
-                        fillColor: 'blue'
-                    });
-                });
             }                            
         }).addTo(map);
         
 //        locate market objects in services_3 geoJSON, add them to map, with popup info available
         var market = L.geoJson(services, {
             pointToLayer: function(feature,latlng) {
-                return L.circleMarker(latlng, {
-                    color: 'green',
-                    weight: 4,
-                    fillColor: 'green',
-                    fillOpacity: 0.5,
-                    radius: 10
+                var mMarker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {icon: marketIcon});
+                mMarker.on('mouseover', function(e) {
+                    mMarker.setIcon(marketSelectIcon);
                 });
+                mMarker.on('mouseout', function(e) {
+                    mMarker.setIcon(marketIcon);
+                });
+                return mMarker
             },
-//            filter by service type within services_3 geoJSON            
             filter: function(feature, layer) {
                 if(feature.properties.service_type == "Market"){
                     return feature;
                 }
             },
-//            create popup feature for site information with user affordance in contrasting color            
             onEachFeature: function(feature, layer) {
                 var props = feature.properties;
                 var content = "<b>" +props.service_name+ "</b></br>" +props.address;
                 layer.bindPopup(content);
-                layer.on('mouseover', function() {
-                    layer.setStyle({
-                        fillColor: 'yellow'
-                    });
-                });
-                layer.on('mouseout', function() {
-                    layer.setStyle({
-                        fillColor: 'green'
-                    });
-                });
             }                            
         }).addTo(map);
         
 //        locate pharmacy objects in services_3 geoJSON, add them to map, with popup info available        
-        var pharmacy = L.geoJson(services, {
+       var pharmacy = L.geoJson(services, {
             pointToLayer: function(feature,latlng) {
-                return L.circleMarker(latlng, {
-                    color: 'red',
-                    weight: 4,
-                    fillColor: 'red',
-                    fillOpacity: 0.5,
-                    radius: 10
+                var pMarker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {icon: pharmacyIcon});
+                pMarker.on('mouseover', function(e) {
+                    pMarker.setIcon(pharmacySelectIcon);
                 });
+                pMarker.on('mouseout', function(e) {
+                    pMarker.setIcon(pharmacyIcon);
+                });
+                return pMarker
             },
-//            filter by service type within services_3 geoJSON            
             filter: function(feature, layer) {
                 if(feature.properties.service_type == "Pharmacy"){
                     return feature;
                 }
             },
-//            create popup feature for site information with user affordance in contrasting color            
             onEachFeature: function(feature, layer) {
                 var props = feature.properties;
                 var content = "<b>" +props.service_name+ "</b></br>" +props.address;
                 layer.bindPopup(content);
-                layer.on('mouseover', function() {
-                    layer.setStyle({
-                        fillColor: 'yellow'
-                    });
-                });
-                layer.on('mouseout', function() {
-                    layer.setStyle({
-                        fillColor: 'red'
-                    });
-                });
             }                            
         }).addTo(map);
         
 //        locate childcare objects in services_3 geoJSON, add them to map, with popup info available        
         var childcare = L.geoJson(services, {
             pointToLayer: function(feature,latlng) {
-                return L.circleMarker(latlng, {
-                    color: 'purple',
-                    weight: 4,
-                    fillColor: 'purple',
-                    fillOpacity: 0.5,
-                    radius: 10
+               var cMarker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {icon: childcareIcon});
+                cMarker.on('mouseover', function(e) {
+                    cMarker.setIcon(childcareSelectIcon);
                 });
+                cMarker.on('mouseout', function(e) {
+                    cMarker.setIcon(childcareIcon);
+                });
+                return cMarker
             },
-//            filter by service type within services_3 geoJSON            
             filter: function(feature, layer) {
                 if(feature.properties.service_type == "Childcare"){
                     return feature;
                 }
             },
-//            create popup feature for site information with user affordance in contrasting color            
             onEachFeature: function(feature, layer) {
                 var props = feature.properties;
                 var content = "<b>" +props.service_name+ "</b></br>" +props.address;
                 layer.bindPopup(content);
-                layer.on('mouseover', function() {
-                    layer.setStyle({
-                        fillColor: 'red'
-                    });
-                });
-                layer.on('mouseout', function() {
-                    layer.setStyle({
-                        fillColor: 'purple'
-                    });
-                });
             }                            
         }).addTo(map);
         
@@ -254,9 +229,9 @@
         var stops = L.geoJson(stops, {
             pointToLayer: function(feature,latlng) {
                 return L.circleMarker(latlng, {
-                    color: 'cyan',
+                    color: '#2792c1',
                     weight: 4,
-                    fillColor: 'cyan',
+                    fillColor: '#2792c1',
                     fillOpacity: 0.5,
                     radius: 5
                 });
@@ -274,12 +249,14 @@
                 layer.bindPopup(content);
                 layer.on('mouseover', function() {
                     layer.setStyle({
-                        fillColor: 'blue'
+                        fillColor: 'yellow',
+                        color:'yellow'
                     });
                 });
                 layer.on('mouseout', function() {
                     layer.setStyle({
-                        fillColor: 'cyan'
+                        fillColor: '#2792c1',
+                        color: '#2792c1'
                     });
                 });
             }                            
@@ -406,17 +383,18 @@
         
 //        create legend with layters that can be turned on and off in common color schemes to the geoJSON objects
         var sourcesLayers = {
-        "<b style='color:blue'>Hospitals</b>": hospital,
-        "<b style='color:red'>Pharmacies</b>": pharmacy,
-        "<b style='color:green'>Groceries</b>": market,
-        "<b style='color:purple'>Childcare</b>": childcare,
-        "<b style='color:cyan; text-shadow: 0px 0px 10px #333;'>Bus Stops</b>": stops
+        "<b style='color:red'>Hospitals</b>": hospital,
+        "<b style='color:gray'>Pharmacies</b>": pharmacy,
+        "<b style='color:purple'>Groceries</b>": market,
+        "<b style='color:orange'>Childcare</b>": childcare,
+        "<b style='color:#2792c1'>Bus Stops</b>": stops
         }
 
         L.control.layers(null, sourcesLayers, { collapsed:false }).addTo(map);
         
 //        create marker for user when clicking on single point in map, will be used for distance calcs above
         var marker;
+        var walkCircle;
         
        // when the user clicks on the map
         map.on('click', function(e) { 
@@ -434,7 +412,21 @@
             // to the existing variable marker
             marker = L.marker(clickCoords).addTo(map);
             
-                    
+            
+            
+            // call the function and pass the marker's coords
+//            testDistance(clickCoords);
+        
+        });
+        map.on('dblclick', function(e) {
+            if(map.hasLayer(walkCircle)) {
+                map.removeLayer(walkCircle);
+            }
+            var click = e.latlng;
+            walkCircle = L.circle(click, 831.5, {
+                stroke: false,
+                fillColor: '#ffec00'
+            }).addTo(map);
         });
         
         
