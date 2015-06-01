@@ -112,13 +112,13 @@
         
         var map = L.map('map', options);
         var dataLayer,
-            attribute = "OWNED_MORT",
+            attribute = "OWNED_MORT", // pick a different variable
             norm = "OWNER";
         
             
         jQuery.getJSON("ky_counties_housing.json", function(data) {
 //            console.log(data);
-            L.geoJson(data, {
+            dataLayer = L.geoJson(data, {
                 style: function(feature) {
                     return {
                         color: '#dddddd',
@@ -128,7 +128,7 @@
                     };
                 }
             }).addTo(map);
-            
+            drawMap();
         });
         
         function drawMap() {
@@ -139,7 +139,11 @@
                 layer.setStyle({
                     fillColor: getColor(layer.feature.properties[attribute]/layer.feature.properties[norm], breaks)
                 });
+                layer.bindPopup("<b>"+layer.feature.properties["NAME"]+" County</b></br>" +
+                                attribute + ": " +
+                                ((layer.feature.properties[attribute]/layer.feature.properties[norm])*100).toLocaleString());  
             });
+            drawLegend(breaks);
             
         }
         
