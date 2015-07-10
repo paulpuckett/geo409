@@ -87,17 +87,20 @@
     var redIguana = L.latLng(40.7718,-111.9124);
         
     map.on('click', function(e){
-        console.log(e.latlng); 
-    
+        console.log(e.latlng);
+        // move distance calc to within click function
+        var clickCoords = e.latlng;
+        map.setView(clickCoords, 6);
+        var distance = clickCoords.distanceTo(redIguana); // use clickcoords to calc distance
+        console.log(distance);
+        var bounds = map.getBounds();
+        var bottomLeft = bounds.getSouthWest();
+        var swdistance = bottomLeft.distanceTo(redIguana);
+        console.log(swdistance);
+        
     });
         
-    var center = map.getCenter();
-    var distance = center.distanceTo(redIguana);
-    console.log(distance);
-    var bounds = map.getBounds();
-    var bottomLeft = bounds.getSouthWest();
-    var swdistance = bottomLeft.distanceTo(redIguana);
-    console.log(swdistance);
+   
         
                       
     </script>
