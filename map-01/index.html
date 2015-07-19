@@ -212,24 +212,35 @@
 
 //              step seven here
             var currentCoords = e.latlng;
-            var marker = L.marker(currentCoords);
+            marker = L.marker(currentCoords);
             marker.addTo(map);
-            
+            testDistance(currentCoords)
             
 //              step eight here
             
         });  // keep this code
         
- //function testDistance(currentCoords) {
-//        function testDistance() {
-//
-//        function testDistance() {
-
-//            iguanaGroup.eachLayer(function(layer) {
-//              step 9 here
-//              step 10 here
-//            });
-//        }
+function testDistance(testCoords) { 
+            
+            // iterate through eacy layer of the iguanaGroup
+            iguanaGroup.eachLayer(function(layer) {
+               
+                // determine distance between marker and layer
+                var distance = testCoords.distanceTo(layer.getLatLng());
+                
+                // subtract radius from distance
+                distance = distance - layer.getRadius();
+               
+                // if that distance is too close
+                if(distance < 2200) {
+                    // change the layer option to indicate a threat
+                    layer.setStyle(redIguanaCampOptions);
+                } else {
+                    // otherwise, ensure layer options are still default
+                    layer.setStyle(yellowIguanaCampOptions); 
+                }
+            });
+        }
         
 // end map1 code
         
